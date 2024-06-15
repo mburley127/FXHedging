@@ -88,6 +88,20 @@ def daily_rets_most_corr(forex_data):
     return most_corr_pairs, returns
 
 
+### Compute Direct Hedge Daily Returns
+def direct_daily_rets(fx_data):
+    # Ensure 'Date' is set as the index for proper computation
+    fx_data.set_index('Date', inplace=True)
+    
+    # Compute the daily returns of the forex data
+    rets = fx_data.pct_change().dropna()
+    
+    # Reset index to make date a column again
+    rets.reset_index(inplace=True)
+
+    return rets
+
+
 ### Compute Hedge Ratio
 def compute_hedge_ratio(pairs, returns):
     # Run linear regression to compute the hedge ratio
