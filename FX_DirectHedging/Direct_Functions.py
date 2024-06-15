@@ -44,50 +44,6 @@ def plot_forex(df, forex_pairs):
     return plt.show()
 
 
-### Correlation Matrix - Heat Map
-def corr_matrix(df):
-    df = df.drop(['Date'], axis = 1)
-    correlation_matrix = df.corr()
-    # Create the day Data heatmap using seaborn
-    plt.figure(figsize = (6, 6))
-    sns.heatmap(correlation_matrix, annot = True, cmap = 'coolwarm', fmt = '.2f', linewidths = 0.5)
-    plt.title('Correlation Matrix of Forex Codes')
-    plt.show()
-
-
-### Compute Stacked Correlation
-def stacked_correlations(df):
-    # Compute the correlation matrix of the DataFrame
-    corr_matrix = df.corr()
-    # Stack the correlation matrix to convert it into a Series
-    stacked_corr = corr_matrix.stack()
-    # Filter out correlation values = 1 (self-correlation)
-    filtered_corr = stacked_corr[stacked_corr < 1]
-    # Sort the correlations in descending order
-    sorted_corr = filtered_corr.sort_values(ascending = False)
-
-    return sorted_corr
-
-
-### Calculate daily returns of Most Correlated Pairs
-def daily_rets_most_corr(forex_data):
-    # Compute stacked correlation and get the most correlated pairs
-    stacked_corr = stacked_correlations(forex_data)
-    most_corr_pairs = list(stacked_corr.index[0])
-
-    # Get FX data for the most correlated pairs
-    most_corr_fx = forex_data[['Date'] + most_corr_pairs]
-
-    # Compute the daily returns of the most correlated pairs
-    most_corr_fx.set_index('Date', inplace = True)
-    returns = most_corr_fx.pct_change().dropna()
-
-    # Reset Headers
-    returns.reset_index(inplace = True)
-
-    return most_corr_pairs, returns
-
-
 ### Compute Direct Hedge Daily Returns
 def direct_daily_rets(fx_data):
     # Ensure 'Date' is set as the index for proper computation
