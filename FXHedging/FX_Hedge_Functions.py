@@ -4,6 +4,7 @@ import pandas as pd
 import matplotlib.pyplot as plt
 import seaborn as sns
 import statsmodels.api as sm
+import numpy as np
 import warnings
 warnings.filterwarnings("ignore")
 
@@ -133,3 +134,47 @@ def plot_hedged_returns(hedged_cumulative_rets, unhedged_cumulative_rets):
     plt.legend()
 
     return plt.show()
+
+
+### Function to Compute Performance Metrics
+def performance_metrics(long_pos, hedged_cumulative_rets, unhedged_cumulative_rets, returns):
+    # Drop na values for proper analysis
+    hedged_cumulative_rets.dropna()
+    unhedged_cumulative_rets.dropna()
+
+    # Compute Hedged/Unhedged Total Returns (Current - Start)
+    hedged_total_rets = hedged_cumulative_rets.iloc[-1] - long_pos
+    unhedged_total_rets = unhedged_cumulative_rets.iloc[-1] - long_pos
+
+    # Compute Hedged/Unhedged Annualized Returns
+    hedged_ann_rets = (1 + hedged_total_rets)**(252 / len(returns)) - 1
+    unhedged_ann_rets = (1 + unhedged_total_rets)**(252 / len(returns)) - 1
+
+    # Compute Hedged/Unhedged Mean Returns
+    hedged_mean = np.mean(hedged_cumulative_rets)
+    unhedged_mean = np.mean(unhedged_cumulative_rets)
+
+    # Compute Hedged/Unhedged Mean Returns
+    hedged_stddev = np.std(hedged_cumulative_rets)
+    unhedged_stddev = np.std(unhedged_cumulative_rets)
+
+    # Compute the Hedged/Unhedged Sharpe Ratio
+    hedged_sharpe_ratio = hedged_mean / hedged_stddev * np.sqrt(252)
+    unhedged_sharpe_ratio = unhedged_mean / unhedged_stddev * np.sqrt(252) 
+
+    # Enhanced readability using formatted strings
+    print(f"{'Metric':<30} {'Hedged':>15} {'Unhedged':>15}")
+    print("="*60)
+    print(f"{'Total Returns':<30} {hedged_total_rets:>15.4f} {unhedged_total_rets:>15.4f}")
+    print(f"{'Annualized Returns':<30} {hedged_ann_rets:>15.4f} {unhedged_ann_rets:>15.4f}")
+    print(f"{'Mean Return':<30} {hedged_mean:>15.4f} {unhedged_mean:>15.4f}")
+    print(f"{'Standard Deviation':<30} {hedged_stddev:>15.4f} {unhedged_stddev:>15.4f}")
+    print(f"{'Sharpe Ratio':<30} {hedged_sharpe_ratio:>15.4f} {unhedged_sharpe_ratio:>15.4f}")
+
+    # Explanation of Sharpe Ratio in print statements
+    print(f"\nThe Sharpe ratio measures the risk-adjusted return of an investment.")
+    print(f"In this instance, the hedged strategy has a Sharpe ratio of {hedged_sharpe_ratio:.4f},")
+    print(f"which means for every unit of risk, the hedged portfolio is generating {hedged_sharpe_ratio:.4f} units of return above the risk-free rate.")
+    print(f"The unhedged strategy has a Sharpe ratio of {unhedged_sharpe_ratio:.4f},")
+    print(f"indicating that for every unit of risk, the unhedged portfolio is generating {unhedged_sharpe_ratio:.4f} units of return above the risk-free rate.")
+    print(f"A higher Sharpe ratio typically indicates a more favorable risk-adjusted return.")
