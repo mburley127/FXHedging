@@ -15,10 +15,10 @@ def import_fx_data(tickers, start_date):
     data = pd.DataFrame()
     if isinstance(tickers, str):
         tickers = [tickers]
-        
+
     for ticker in tickers:
         data[ticker] = yf.download(ticker, start = start_date)['Adj Close']
-        
+
     # Reset index to make headings in the same row
     data.reset_index(inplace = True)
     # Convert values in date col to dt
@@ -49,10 +49,10 @@ def plot_forex(df, forex_pairs):
 def daily_returns(fx_data):
     # Ensure 'Date' is set as the index for proper computation
     fx_data.set_index('Date', inplace=True)
-    
+
     # Compute the daily returns of the forex data
     rets = fx_data.pct_change().dropna()
-    
+
     # Reset index to make date a column again
     rets.reset_index(inplace=True)
 
@@ -64,7 +64,7 @@ def get_beta(fx_rets, base_pair, benchmark_pair):
     # Get Base (first pair) and Benchmark (second pair) Returns 
     base_rets = fx_rets[base_pair]
     benchmark_rets = fx_rets[benchmark_pair]
-    
+
     # Add a constant to the benchmark returns
     cons = sm.add_constant(benchmark_rets)
     # Run the OLS Regression
