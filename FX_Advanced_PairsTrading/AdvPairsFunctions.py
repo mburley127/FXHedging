@@ -96,7 +96,7 @@ def beta_backtest(long_pos, primary_pair, benchmark_pair, returns, beta):
 
 
 ### Function to compute performance metrics
-def performance_metrics(long_pos, hedged_cumulative_rets, unhedged_cumulative_rets, returns):
+def performance_metrics(long_pos, hedged_cumulative_rets, unhedged_cumulative_rets, returns, base_pair, benchmark_pair):
     hedged_total_rets = hedged_cumulative_rets.iloc[-1] - long_pos
     unhedged_total_rets = unhedged_cumulative_rets.iloc[-1] - long_pos
 
@@ -113,6 +113,7 @@ def performance_metrics(long_pos, hedged_cumulative_rets, unhedged_cumulative_re
     unhedged_sharpe_ratio = (unhedged_mean / unhedged_stddev) * np.sqrt(252) 
 
     # Enhanced readability using formatted strings
+    print(f"\nPerformance Metrics for Pair: {base_pair} (Base) and {benchmark_pair} (Benchmark)")
     print(f"{'Metric':<30} {'Hedged':>15} {'Unhedged':>15}")
     print("="*60)
     print(f"{'Total Returns':<30} {hedged_total_rets:>15.4f} {unhedged_total_rets:>15.4f}")
