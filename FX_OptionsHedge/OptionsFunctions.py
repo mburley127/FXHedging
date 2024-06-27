@@ -42,3 +42,15 @@ def plot_forex(df, forex_pairs):
     return plt.show()
 
 
+### Function to Compute Daily Returns
+def daily_returns(fx_data):
+    # Ensure 'Date' is set as the index for proper computation
+    fx_data.set_index('Date', inplace=True)
+
+    # Compute the daily returns of the forex data
+    rets = fx_data.pct_change().dropna()
+
+    # Reset index to make date a column again
+    rets.reset_index(inplace=True)
+
+    return rets
