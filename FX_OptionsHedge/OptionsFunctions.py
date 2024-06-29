@@ -35,7 +35,7 @@ def plot_forex(df, forex_pairs):
         plt.xlabel('Date')
         plt.ylabel('FX Rates')
 
-        plt.xticks(rotation = 45)  # Rotate x-axis labels for better readability
+        plt.xticks(rotation = 45) # Rotate x-axis labels for better readability
         plt.grid(True)
         plt.tight_layout()
 
@@ -45,12 +45,12 @@ def plot_forex(df, forex_pairs):
 ### Function to Compute Daily Returns
 def daily_returns(fx_data):
     # Ensure 'Date' is set as the index for proper computation
-    fx_data.set_index('Date', inplace=True)
+    fx_data.set_index('Date', inplace = True)
 
     # Compute the daily returns of the forex data
     rets = fx_data.pct_change().dropna()
 
     # Reset index to make date a column again
-    rets.reset_index(inplace=True)
+    rets.reset_index(inplace = True)
 
     return rets
