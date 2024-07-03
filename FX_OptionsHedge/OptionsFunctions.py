@@ -9,13 +9,13 @@ warnings.filterwarnings("ignore")
 
 
 ### Function to Import Rate Data
-def import_fx_data(tickers, start_date):
+def import_fx_data(tickers, start_date, end_date):
     data = pd.DataFrame()
     if isinstance(tickers, str):
         tickers = [tickers]
         
     for ticker in tickers:
-        data[ticker] = yf.download(ticker, start = start_date)['Adj Close']
+        data[ticker] = yf.download(ticker, start = start_date, end = end_date)['Adj Close']
         
     # Reset index to make headings in the same row
     data.reset_index(inplace = True)
@@ -26,9 +26,9 @@ def import_fx_data(tickers, start_date):
 
 
 ### Function to Get Most Recent Stock Price (S_0) and Set Strike (K)
-def set_price_and_strike(pair, start_date, option_type):
+def set_price_and_strike(pair, start_date, end_date, option_type):
     # Function Call to get FX Data
-    forex_data = import_fx_data(pair, start_date) 
+    forex_data = import_fx_data(pair, start_date, end_date) 
     # Get the Spot Price (Most recent FX rate value)
     S_0 = forex_data[pair].iloc[-1]  # Extract the last value from the pair column (ex. 'USDEUR=X')
     # Set Strike Price 2% above (call) or 2% below (put) S_0

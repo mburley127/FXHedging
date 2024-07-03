@@ -5,19 +5,18 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 import statsmodels.api as sm
 import numpy as np
-import itertools
 import warnings
 warnings.filterwarnings("ignore")
 
 
 ### Function to Import Rate Data
-def import_fx_data(tickers, start_date):
+def import_fx_data(tickers, start_date, end_date):
     data = pd.DataFrame()
     if isinstance(tickers, str):
         tickers = [tickers]
 
     for ticker in tickers:
-        data[ticker] = yf.download(ticker, start = start_date)['Adj Close']
+        data[ticker] = yf.download(ticker, start = start_date, end = end_date)['Adj Close']
 
     # Reset index to make headings in the same row
     data.reset_index(inplace = True)
