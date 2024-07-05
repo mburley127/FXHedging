@@ -94,6 +94,19 @@ def beta_backtest(long_pos, primary_pair, benchmark_pair, returns, beta):
     return short_pos, hedged_cumulative_rets, unhedged_cumulative_rets
 
 
+### Plot Hedged vs. Unhedged Returns
+def plot_hedged_returns(hedged_cumulative_rets, unhedged_cumulative_rets):
+    plt.figure(figsize = (8, 5))
+    plt.plot(hedged_cumulative_rets.index, hedged_cumulative_rets, label = 'Hedged Returns')
+    plt.plot(unhedged_cumulative_rets.index, unhedged_cumulative_rets, label = 'Unhedged Returns')
+    plt.xlabel('Periods')
+    plt.ylabel('Cumulative Returns')
+    plt.title('Beta Hedged vs. Unhedged Cumulative Returns for FX Pairs')
+    plt.legend()
+
+    return plt.show()
+
+
 ### Function to compute performance metrics
 def performance_metrics(long_pos, hedged_cumulative_rets, unhedged_cumulative_rets, returns, base_pair, benchmark_pair):
     hedged_total_rets = hedged_cumulative_rets.iloc[-1] - long_pos
