@@ -159,8 +159,8 @@ def performance_metrics(long_pos, hedged_cumulative_rets, unhedged_cumulative_re
     unhedged_stddev = np.std(unhedged_cumulative_rets)
 
     # Compute the Hedged/Unhedged Sharpe Ratio
-    hedged_sharpe_ratio = hedged_mean / hedged_stddev * np.sqrt(252)
-    unhedged_sharpe_ratio = unhedged_mean / unhedged_stddev * np.sqrt(252) 
+    hedged_sharpe_ratio = (hedged_mean / long_pos) / hedged_stddev * np.sqrt(252)
+    unhedged_sharpe_ratio = (unhedged_mean / long_pos) / unhedged_stddev * np.sqrt(252)
 
     # Enhanced readability using formatted strings
     print(f"{'Metric':<30} {'Hedged':>15} {'Unhedged':>15}")

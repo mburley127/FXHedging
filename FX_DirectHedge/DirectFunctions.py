@@ -86,7 +86,7 @@ def compute_hedge_ratio(pairs, returns):
 
 ### Define and Calculate Hedged and Unhedged Returns
 def calculate_hedged_unhedged(long_pos, pairs, returns, hedge_ratio):
-    # Compute Short Position
+    # Compute Short Position using the absolute value of the hedge ratio
     short_pos = -hedge_ratio * long_pos
 
     # Compute daily returns for the long and short positions
@@ -140,8 +140,8 @@ def performance_metrics(long_pos, hedged_cumulative_rets, unhedged_cumulative_re
     unhedged_stddev = np.std(unhedged_cumulative_rets)
 
     # Compute the Hedged/Unhedged Sharpe Ratio
-    hedged_sharpe_ratio = hedged_mean / hedged_stddev * np.sqrt(252)
-    unhedged_sharpe_ratio = unhedged_mean / unhedged_stddev * np.sqrt(252) 
+    hedged_sharpe_ratio = (hedged_mean / long_pos) / hedged_stddev * np.sqrt(252)
+    unhedged_sharpe_ratio = (unhedged_mean / long_pos) / unhedged_stddev * np.sqrt(252)
 
     # Enhanced readability using formatted strings
     print(f"{'Metric':<30} {'Hedged':>15} {'Unhedged':>15}")
