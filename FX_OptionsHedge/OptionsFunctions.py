@@ -196,16 +196,16 @@ def performance_metrics(long_pos, hedge_pos, hedged_cumulative_rets, unhedged_cu
     unhedged_ann_rets = ((unhedged_cumulative_rets.iloc[-1] / total_investment_unhedged)**(252 / len(returns)) - 1) * 100
 
     # Compute Hedged/Unhedged Mean Returns (annualized)
-    hedged_mean = np.mean(hedged_cumulative_rets.pct_change().dropna()) * 252
-    unhedged_mean = np.mean(unhedged_cumulative_rets.pct_change().dropna()) * 252
+    hedged_mean = np.mean(hedged_cumulative_rets.pct_change().dropna()) * 252 * 100
+    unhedged_mean = np.mean(unhedged_cumulative_rets.pct_change().dropna()) * 252 * 100
 
     # Compute Hedged/Unhedged Standard Deviation of Returns (annualized)
     hedged_stddev = np.std(hedged_cumulative_rets.pct_change().dropna()) * np.sqrt(252)
     unhedged_stddev = np.std(unhedged_cumulative_rets.pct_change().dropna()) * np.sqrt(252)
 
     # Compute the Hedged/Unhedged Sharpe Ratio
-    hedged_sharpe_ratio = hedged_mean / hedged_stddev
-    unhedged_sharpe_ratio = unhedged_mean / unhedged_stddev
+    hedged_sharpe_ratio = (hedged_mean / 100) / hedged_stddev
+    unhedged_sharpe_ratio = (unhedged_mean / 100) / unhedged_stddev
 
     # Enhanced readability using formatted strings
     print(f"\nPerformance Metrics for Hedged and Unhedged Positions")
@@ -213,7 +213,7 @@ def performance_metrics(long_pos, hedge_pos, hedged_cumulative_rets, unhedged_cu
     print("="*60)
     print(f"{'Total Returns (%)':<30} {hedged_total_rets:>15.4f} {unhedged_total_rets:>15.4f}")
     print(f"{'Annualized Returns (%)':<30} {hedged_ann_rets:>15.4f} {unhedged_ann_rets:>15.4f}")
-    print(f"{'Mean Return':<30} {hedged_mean:>15.4f} {unhedged_mean:>15.4f}")
+    print(f"{'Mean Return (%)':<30} {hedged_mean:>15.4f} {unhedged_mean:>15.4f}")
     print(f"{'Standard Deviation':<30} {hedged_stddev:>15.4f} {unhedged_stddev:>15.4f}")
     print(f"{'Sharpe Ratio':<30} {hedged_sharpe_ratio:>15.4f} {unhedged_sharpe_ratio:>15.4f}")
 
