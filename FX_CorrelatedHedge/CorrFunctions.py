@@ -136,7 +136,7 @@ def plot_hedged_returns(hedged_cumulative_rets, unhedged_cumulative_rets):
     plt.plot(unhedged_cumulative_rets.index, unhedged_cumulative_rets_pct, label='Unhedged Returns (%)')
     plt.xlabel('Periods')
     plt.ylabel('Cumulative Returns (%)')
-    plt.title('Beta Hedged vs. Unhedged Cumulative Returns for FX Pairs')
+    plt.title('Correlated Hedged vs. Unhedged Cumulative Returns for FX Pairs')
     plt.legend()
     plt.grid(True)
 
