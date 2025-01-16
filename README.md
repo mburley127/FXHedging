@@ -17,7 +17,7 @@ This repository contains implementations of various hedging models in Python. Th
    This model uses the beta coefficient to determine the hedge ratio, which measures the sensitivity of an asset's returns relative to a benchmark. The hedge ratio is computed through a linear regression between the base and benchmark currency pairs. This method adjusts the hedge based on how strongly the base pair moves in relation to the benchmark pair.
 
 4. **Options Hedging Model**
-   - `FX_BetaHedge`: Contains the implementation of the Options Hedging model.
+   - `FX_OptionsHedge`: Contains the implementation of the Options Hedging model.
 
    This model employs the Black-Scholes Merton (BSM) model to price options and compute the necessary greeks, with a particular focus on delta ($\Delta$). Delta hedging involves adjusting the position in the underlying asset to offset the risk of the option position. The model allows for a more sophisticated hedging technique that uses financial derivatives to manage risk.Input basic info here
 
